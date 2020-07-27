@@ -30,6 +30,7 @@ public class AccountRestController {
         appUser.setPassword(registerForm.getPassword());
          accountService.saveUser(appUser);
          accountService.addRoleToUser(registerForm.getUsername(),"USER");
+
          return appUser;
     }
 
