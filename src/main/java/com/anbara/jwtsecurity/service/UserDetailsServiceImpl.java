@@ -3,6 +3,7 @@ package com.anbara.jwtsecurity.service;
 import com.anbara.jwtsecurity.dao.UserRepository;
 import com.anbara.jwtsecurity.entities.AppUser;
 import com.anbara.jwtsecurity.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +17,7 @@ import java.util.Collection;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
    private final AccountService accountService;
 
     public UserDetailsServiceImpl(AccountService accountService) {

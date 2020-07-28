@@ -13,13 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
     @Autowired
-    private  UserRepository userRepository;    @Autowired
+    private UserRepository userRepository;
+    @Autowired
 
-    private  RoleRepository roleRepository;    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
 
-    private  PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
 //    public AccountServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
 //        this.userRepository = userRepository;
@@ -40,15 +42,15 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void addRoleToUser(String username, String roleName) {
-     AppUser appUser=   userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(username+" not found"));
-     AppRole appRole= roleRepository.findByNameRole(roleName).orElseThrow(()->new RuntimeException(roleName+" not found"));
-     appUser.getRoles().add(appRole);
-     //userRepository.save(appUser); // comme la methode est transactional, des qu'il fait commit automatiqument il sait
-                                     // qu il fait ajouter un role, automatiqument il ajout au table d'association
+        AppUser appUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
+        AppRole appRole = roleRepository.findByNameRole(roleName).orElseThrow(() -> new RuntimeException(roleName + " not found"));
+        appUser.getRoles().add(appRole);
+        //userRepository.save(appUser); // comme la methode est transactional, des qu'il fait commit automatiqument il sait
+        // qu il fait ajouter un role, automatiqument il ajout au table d'association
     }
 
     @Override
     public AppUser findUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("username not found"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username not found"));
     }
 }

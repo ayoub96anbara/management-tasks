@@ -2,6 +2,7 @@ package com.anbara.jwtsecurity.security;
 
 import com.anbara.jwtsecurity.service.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,23 +26,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 
+    @Bean
+    public JWTAuthorizationFilter jwtAuthorizationFilter() {
+        return new JWTAuthorizationFilter();
+
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.jdbcAuthentication()
 //                .authoritiesByUsernameQuery()
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder())
+                .passwordEncoder(passwordEncoder)
         ;
     }
 
@@ -57,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), objectMapper()))
+                .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
