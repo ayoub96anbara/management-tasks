@@ -1,4 +1,4 @@
-package com.anbara.jwtsecurity.security;
+package com.anbara.jwtsecurity.service;
 
 import com.anbara.jwtsecurity.dao.UserRepository;
 import com.anbara.jwtsecurity.entities.AppUser;

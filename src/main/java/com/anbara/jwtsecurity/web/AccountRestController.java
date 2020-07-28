@@ -2,7 +2,6 @@ package com.anbara.jwtsecurity.web;
 
 import com.anbara.jwtsecurity.entities.AppUser;
 import com.anbara.jwtsecurity.service.AccountService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +29,7 @@ public class AccountRestController {
         appUser.setPassword(registerForm.getPassword());
          accountService.saveUser(appUser);
          accountService.addRoleToUser(registerForm.getUsername(),"USER");
-
+        System.out.println(appUser);
          return appUser;
     }
 
